@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>コラボワークショップ｜美Fes 2026.5.3</title>
+  <meta name="description" content="簡易パーソナルカラー＆顔パーツ診断とビジューアクセサリー作りがセットになった人気のコラボワークショップ。2026年5月3日(日) 中之島公会堂にて開催。">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Noto Serif JP"', 'serif'],
+            display: ['"Cormorant Garamond"', 'serif'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --cream:      #fdf8f4;
+      --rose-pale:  #f8eff0;
+      --rose-blush: #f0d4d9;
+      --rose-light: #ddb0b8;
+      --rose:       #c4838e;
+      --rose-deep:  #9e5c68;
+      --gold-pale:  #f5eed8;
+      --gold-light: #e2d0a8;
+      --gold:       #b89460;
+      --gold-dark:  #8a6e48;
+      --ink-pale:   #f2ece8;
+      --ink-light:  #bca8a0;
+      --ink-mid:    #786060;
+      --ink-dark:   #4a3535;
+      --ink:        #2c1e1e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Serif JP', serif;
+      background-color: var(--cream);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    .font-display { font-family: 'Cormorant Garamond', serif; }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 1s cubic-bezier(0.16,1,0.3,1),
+                  transform 1s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: .12s; }
+    .reveal-d2 { transition-delay: .24s; }
+    .reveal-d3 { transition-delay: .36s; }
+    .reveal-d4 { transition-delay: .48s; }
+
+    /* Placeholder images */
+    .ph-hero    { background: linear-gradient(155deg, #f8eff0 0%, #fdf8f4 40%, #f5eed8 100%); }
+    .ph-warm    { background: linear-gradient(135deg, #f0dde1 0%, #fdf0e8 65%, #ede8e0 100%); }
+    .ph-color   { background: linear-gradient(135deg, #fde8e4 0%, #f5d8dc 40%, #e8d0d8 100%); }
+    .ph-face    { background: linear-gradient(135deg, #e8d8e4 0%, #f0dde8 55%, #fde8f0 100%); }
+    .ph-jewel   { background: linear-gradient(135deg, #e8e0d4 0%, #f5ede8 55%, #ede0d0 100%); }
+    .ph-profile { background: linear-gradient(135deg, #f5e8e0 0%, #f0dde1 50%, #e8d5d8 100%); }
+    .ph-dark    { background: linear-gradient(160deg, #2c1e1e 0%, #4a3535 55%, #3a2828 100%); }
+
+    /* Decorative lines */
+    .hr-rose { height: 1px; background: linear-gradient(to right, transparent, var(--rose-light), transparent); }
+    .hr-gold { height: 1px; background: linear-gradient(to right, transparent, var(--gold-light), transparent); }
+
+    /* Scroll indicator */
+    @keyframes scrollDrop {
+      0%,100% { transform: translateY(0); opacity: .7; }
+      50%     { transform: translateY(8px); opacity: .2; }
+    }
+    .scroll-dot { animation: scrollDrop 2.4s ease-in-out infinite; }
+
+    /* CTA button */
+    .btn-cta {
+      display: inline-block;
+      padding: 20px 60px;
+      border: 1px solid var(--rose);
+      color: var(--rose-deep);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      letter-spacing: .25em;
+      transition: background .4s, color .4s, box-shadow .4s;
+    }
+    .btn-cta:hover {
+      background: var(--rose-deep);
+      color: #fff;
+      box-shadow: 0 8px 32px rgba(158,92,104,.18);
+    }
+
+    /* FAQ accordion */
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s cubic-bezier(0.16,1,0.3,1), padding .4s;
+    }
+    .faq-item.open .faq-answer {
+      max-height: 200px;
+    }
+    .faq-icon {
+      transition: transform .3s;
+    }
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+    }
+
+    /* Section padding helper */
+    .sec-pad { padding-top: 120px; padding-bottom: 120px; }
+    @media (min-width: 768px) {
+      .sec-pad { padding-top: 144px; padding-bottom: 144px; }
+    }
+  </style>
+</head>
+<body>
+
+
+<!-- ═══════════════════════════════════════════════
+     1. HERO
+═══════════════════════════════════════════════ -->
+<section class="relative min-h-screen flex flex-col items-center justify-center ph-hero overflow-hidden px-6" style="padding-top:100px; padding-bottom:140px;">
+
+  <!-- ambient orbs -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden">
+    <div class="absolute -top-24 -right-24 w-[500px] h-[500px] rounded-full" style="background:radial-gradient(circle, rgba(196,131,142,.12) 0%, transparent 70%);"></div>
+    <div class="absolute bottom-0 -left-20 w-[380px] h-[380px] rounded-full" style="background:radial-gradient(circle, rgba(184,148,96,.09) 0%, transparent 70%);"></div>
+  </div>
+
+  <!-- event name -->
+  <p class="reveal font-display tracking-[.3em] mb-6 z-10" style="font-size:clamp(28px,6vw,48px); color:var(--rose-deep); font-weight:300;">
+    美 Fes <span class="italic">2026</span>
+  </p>
+
+  <!-- label -->
+  <p class="reveal reveal-d1 font-display uppercase tracking-[.4em] text-[10px] mb-8 z-10" style="color:var(--rose);">
+    Collaboration Workshop
+  </p>
+
+  <!-- date -->
+  <div class="reveal reveal-d1 text-center mb-10 z-10">
+    <p class="font-display font-light tracking-[.12em]" style="font-size:clamp(36px,8vw,64px); color:var(--rose-deep); line-height:1.3;">
+      <span class="italic">2026</span><span class="text-[.6em] mx-1" style="color:var(--rose-light);">/</span><span class="italic">5</span><span class="text-[.6em] mx-1" style="color:var(--rose-light);">/</span><span class="italic">3</span>
+      <span class="text-[.5em] ml-2 tracking-[.15em]" style="color:var(--gold);">Sun</span>
+    </p>
+  </div>
+
+  <!-- main title -->
+  <h1 class="reveal reveal-d2 font-display text-center z-10" style="font-size:clamp(24px,5.5vw,48px); letter-spacing:.18em; font-weight:300; line-height:1.6; color:var(--rose-deep);">
+    personal color<br>
+    <span style="color:var(--gold);">×</span><br>
+    bijou accessory
+  </h1>
+
+  <!-- rule -->
+  <div class="reveal reveal-d3 hr-rose w-48 my-12 z-10"></div>
+
+  <!-- subtext -->
+  <p class="reveal reveal-d3 font-light text-center text-sm z-10" style="line-height:2.8; color:var(--ink-mid); max-width:380px;">
+    簡易パーソナルカラー＆顔パーツ診断と<br>
+    ビジューアクセサリー作りがセットになった<br>
+    人気のコラボワークショップ
+  </p>
+
+  <!-- flow keywords -->
+  <div class="reveal reveal-d4 mt-14 z-10">
+    <p class="font-display text-sm tracking-[.22em]" style="color:var(--rose-deep);">
+      選ぶ &nbsp;&mdash;&nbsp; 作る &nbsp;&mdash;&nbsp; 身につける
+    </p>
+  </div>
+
+  <!-- scroll cue -->
+  <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 z-10">
+    <p class="font-display text-[9px] tracking-[.32em] uppercase" style="color:var(--ink-light);">Scroll</p>
+    <div class="scroll-dot w-px h-14" style="background:linear-gradient(to bottom, var(--rose-light), transparent);"></div>
+  </div>
+
+</section>
+
+
+
+<!-- ═══════════════════════════════════════════════
+     2. CONCEPT
+═══════════════════════════════════════════════ -->
+<section class="bg-white px-6 sec-pad">
+  <div class="max-w-5xl mx-auto">
+
+    <div class="text-center mb-20">
+      <p class="reveal font-display uppercase tracking-[.38em] text-[10px] mb-5" style="color:var(--rose);">Concept</p>
+      <h2 class="reveal reveal-d1 font-serif font-light" style="font-size:clamp(22px,4vw,36px); line-height:1.9;">
+        わたしに似合うをつくる
+      </h2>
+      <div class="reveal reveal-d2 hr-rose w-20 mx-auto mt-7"></div>
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-16 md:gap-20 items-center">
+      <!-- image -->
+      <div class="reveal w-full md:w-5/12 flex-shrink-0">
+        <div class="overflow-hidden relative" style="aspect-ratio:3/4;">
+          <img src="images/concept.jpeg" alt="アクセサリー" style="width:100%; height:100%; object-fit:cover; object-position:center;">
+        </div>
+      </div>
+      <!-- text -->
+      <div class="reveal reveal-d1 flex-1 space-y-10">
+        <p class="font-serif font-light" style="font-size:clamp(17px,2.5vw,22px); line-height:2.4;">
+          診断で自分らしさを再発見し、<br>
+          夢中になってアクセサリーを作る時間は<br>
+          <span style="color:var(--rose-deep);">心のリフレッシュにもぴったり。</span>
+        </p>
+        <div class="w-12 h-px" style="background:var(--rose-light);"></div>
+        <p class="font-light text-sm" style="line-height:2.8; color:var(--ink-mid);">
+          自分で作った世界にひとつだけのアクセサリーを<br>
+          身につけるたびに自信が持てる——<br>
+          そんな特別な体験をお届けします。
+        </p>
+        <div class="flex flex-wrap gap-3 pt-2">
+          <span class="font-display text-xs px-5 py-2 border tracking-wider" style="border-color:var(--rose-light); color:var(--rose-deep);"># 似合う色がわかる</span>
+          <span class="font-display text-xs px-5 py-2 border tracking-wider" style="border-color:var(--rose-light); color:var(--rose-deep);"># 世界に一つのアクセ</span>
+          <span class="font-display text-xs px-5 py-2 border tracking-wider" style="border-color:var(--rose-light); color:var(--rose-deep);"># 自己肯定感UP</span>
+          <span class="font-display text-xs px-5 py-2 border tracking-wider" style="border-color:var(--rose-light); color:var(--rose-deep);"># 心のリフレッシュ</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     3. WORKSHOP FLOW
+═══════════════════════════════════════════════ -->
+<section class="px-6 sec-pad" style="background:var(--cream);">
+  <div class="max-w-4xl mx-auto">
+
+    <div class="text-center mb-24">
+      <p class="reveal font-display uppercase tracking-[.38em] text-[10px] mb-5" style="color:var(--rose);">Workshop Flow</p>
+      <h2 class="reveal reveal-d1 font-serif font-light" style="font-size:clamp(22px,4vw,36px); line-height:1.9;">
+        ワークショップの流れ
+      </h2>
+      <div class="reveal reveal-d2 hr-rose w-20 mx-auto mt-7"></div>
+    </div>
+
+    <!-- Step 01 -->
+    <div class="reveal flex flex-col md:flex-row gap-10 md:gap-20 items-start mb-24 pb-24" style="border-bottom:1px solid #f0e8e8;">
+      <div class="flex-shrink-0 text-center md:text-left">
+        <p class="font-display italic font-light leading-none" style="font-size:88px; color:var(--rose-blush);">01</p>
+      </div>
+      <div class="flex-1">
+        <p class="font-display uppercase tracking-[.32em] text-[10px] mb-4" style="color:var(--rose);">Step One</p>
+        <h3 class="font-serif font-light text-2xl mb-5" style="line-height:1.8;">簡易パーソナルカラー診断</h3>
+        <p class="font-light text-sm mb-8" style="line-height:2.8; color:var(--ink-mid);">
+          肌をパッと明るく見せるカラーをチェック。<br>
+          あなたに似合う色のグループを丁寧にご提案します。
+        </p>
+        <div class="overflow-hidden relative" style="aspect-ratio:16/7;">
+          <img src="images/A.jpg" alt="パーソナルカラー診断" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 02 -->
+    <div class="reveal flex flex-col md:flex-row gap-10 md:gap-20 items-start mb-24 pb-24" style="border-bottom:1px solid #f0e8e8;">
+      <div class="flex-shrink-0 text-center md:text-left">
+        <p class="font-display italic font-light leading-none" style="font-size:88px; color:var(--rose-blush);">02</p>
+      </div>
+      <div class="flex-1">
+        <p class="font-display uppercase tracking-[.32em] text-[10px] mb-4" style="color:var(--rose);">Step Two</p>
+        <h3 class="font-serif font-light text-2xl mb-5" style="line-height:1.8;">顔パーツ診断</h3>
+        <p class="font-light text-sm mb-8" style="line-height:2.8; color:var(--ink-mid);">
+          パーツのバランスから、あなたに似合うデザインをご提案。<br>
+          あなたの魅力を最大限に引き出します。
+        </p>
+        <div class="overflow-hidden relative" style="aspect-ratio:16/7;">
+          <img src="images/face-analysis.jpg" alt="顔パーツ診断" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 03 -->
+    <div class="reveal flex flex-col md:flex-row gap-10 md:gap-20 items-start">
+      <div class="flex-shrink-0 text-center md:text-left">
+        <p class="font-display italic font-light leading-none" style="font-size:88px; color:var(--rose-blush);">03</p>
+      </div>
+      <div class="flex-1">
+        <p class="font-display uppercase tracking-[.32em] text-[10px] mb-4" style="color:var(--rose);">Step Three</p>
+        <h3 class="font-serif font-light text-2xl mb-5" style="line-height:1.8;">ビジューアクセサリー作り</h3>
+        <p class="font-light text-sm mb-8" style="line-height:2.8; color:var(--ink-mid);">
+          診断結果をもとに、あなただけのピアス or イヤリングを製作。<br>
+          はじめての方も丁寧にサポートします。
+        </p>
+        <div class="overflow-hidden relative" style="aspect-ratio:16/7;">
+          <img src="images/accessories.jpg" alt="ビジューアクセサリー作り" style="width:100%; height:100%; object-fit:cover;">
+        </div>
+        <p class="mt-7 font-light text-xs tracking-wide" style="color:var(--ink-light); line-height:2.6;">
+          はじめての方も「私にも作れるかな？」という方も<br>
+          丁寧にお手伝いしますのでご安心ください
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     Dark strip
+═══════════════════════════════════════════════ -->
+<div class="w-full ph-dark overflow-hidden relative" style="height:220px;">
+  <div class="absolute inset-0 flex items-center justify-center">
+    <p class="font-display italic font-light tracking-[.35em]" style="font-size:clamp(32px,6vw,68px); color:rgba(221,176,184,.15);">Workshop</p>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     4. BENEFITS
+═══════════════════════════════════════════════ -->
+<section class="bg-white px-6 sec-pad">
+  <div class="max-w-3xl mx-auto">
+
+    <div class="text-center mb-20">
+      <p class="reveal font-display uppercase tracking-[.38em] text-[10px] mb-5" style="color:var(--rose);">What You Get</p>
+      <h2 class="reveal reveal-d1 font-serif font-light" style="font-size:clamp(22px,4vw,36px); line-height:1.9;">
+        ワークショップを受けると…
+      </h2>
+      <div class="reveal reveal-d2 hr-rose w-20 mx-auto mt-7"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2">
+      <div class="reveal flex items-start gap-6 py-8" style="border-bottom:1px solid #f0e8e8;">
+        <span class="flex-shrink-0 mt-1.5 w-4 h-4 rounded-full border flex items-center justify-center" style="border-color:var(--rose);"><span class="block w-1.5 h-1.5 rounded-full" style="background:var(--rose);"></span></span>
+        <p class="font-light text-sm tracking-wide" style="color:var(--ink-mid); line-height:2.2;">自分に似合う色や形がわかる</p>
+      </div>
+      <div class="reveal reveal-d1 flex items-start gap-6 py-8 md:pl-10" style="border-bottom:1px solid #f0e8e8;">
+        <span class="flex-shrink-0 mt-1.5 w-4 h-4 rounded-full border flex items-center justify-center" style="border-color:var(--rose);"><span class="block w-1.5 h-1.5 rounded-full" style="background:var(--rose);"></span></span>
+        <p class="font-light text-sm tracking-wide" style="color:var(--ink-mid); line-height:2.2;">オリジナルアクセサリーが作れる</p>
+      </div>
+      <div class="reveal flex items-start gap-6 py-8" style="border-bottom:1px solid #f0e8e8;">
+        <span class="flex-shrink-0 mt-1.5 w-4 h-4 rounded-full border flex items-center justify-center" style="border-color:var(--rose);"><span class="block w-1.5 h-1.5 rounded-full" style="background:var(--rose);"></span></span>
+        <p class="font-light text-sm tracking-wide" style="color:var(--ink-mid); line-height:2.2;">気分が上がり、自信が持てる</p>
+      </div>
+      <div class="reveal reveal-d1 flex items-start gap-6 py-8 md:pl-10" style="border-bottom:1px solid #f0e8e8;">
+        <span class="flex-shrink-0 mt-1.5 w-4 h-4 rounded-full border flex items-center justify-center" style="border-color:var(--rose);"><span class="block w-1.5 h-1.5 rounded-full" style="background:var(--rose);"></span></span>
+        <p class="font-light text-sm tracking-wide" style="color:var(--ink-mid); line-height:2.2;">自己肯定感が高まる</p>
+      </div>
+      <div class="reveal flex items-start gap-6 py-8" style="border-bottom:1px solid #f0e8e8;">
+        <span class="flex-shrink-0 mt-1.5 w-4 h-4 rounded-full border flex items-center justify-center" style="border-color:var(--rose);"><span class="block w-1.5 h-1.5 rounded-full" style="background:var(--rose);"></span></span>
+        <p class="font-light text-sm tracking-wide" style="color:var(--ink-mid); line-height:2.2;">褒められアクセサリーで魅力UP</p>
+      </div>
+      <div class="reveal reveal-d1 flex items-start gap-6 py-8 md:pl-10" style="border-bottom:1px solid #f0e8e8;">
+        <span class="flex-shrink-0 mt-1.5 w-4 h-4 rounded-full border flex items-center justify-center" style="border-color:var(--rose);"><span class="block w-1.5 h-1.5 rounded-full" style="background:var(--rose);"></span></span>
+        <p class="font-light text-sm tracking-wide" style="color:var(--ink-mid); line-height:2.2;">自分を見つめなおす時間が持てる</p>
+      </div>
+      <div class="reveal flex items-start gap-6 py-8 md:col-span-2">
+        <span class="flex-shrink-0 mt-1.5 w-4 h-4 rounded-full border flex items-center justify-center" style="border-color:var(--rose);"><span class="block w-1.5 h-1.5 rounded-full" style="background:var(--rose);"></span></span>
+        <p class="font-light text-sm tracking-wide" style="color:var(--ink-mid); line-height:2.2;">日々を前向きに過ごせるきっかけになる</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     5. VOICES
+═══════════════════════════════════════════════ -->
+<section class="px-6 sec-pad" style="background:var(--rose-pale);">
+  <div class="max-w-4xl mx-auto">
+
+    <div class="text-center mb-20">
+      <p class="reveal font-display uppercase tracking-[.38em] text-[10px] mb-5" style="color:var(--rose);">Voices</p>
+      <h2 class="reveal reveal-d1 font-serif font-light" style="font-size:clamp(22px,4vw,36px); line-height:1.9;">
+        お客様の声
+      </h2>
+      <div class="reveal reveal-d2 hr-rose w-20 mx-auto mt-7"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <!-- Voice 1 -->
+      <div class="reveal bg-white p-10" style="border-top:2px solid var(--rose-light);">
+        <div class="flex items-center gap-1 mb-6">
+          <span style="color:var(--gold);">&#9733;</span>
+          <span style="color:var(--gold);">&#9733;</span>
+          <span style="color:var(--gold);">&#9733;</span>
+          <span style="color:var(--gold);">&#9733;</span>
+          <span style="color:var(--gold);">&#9733;</span>
+        </div>
+        <p class="font-light text-sm mb-8" style="line-height:2.6; color:var(--ink-mid);">
+          自分に似合う色がわかって、アクセサリーまで作れるなんて贅沢すぎました！毎日つけてます。
+        </p>
+        <div>
+          <p class="text-xs font-medium" style="color:var(--ink-dark);">M.S さん</p>
+          <p class="text-[10px]" style="color:var(--ink-light);">30代・会社員</p>
+        </div>
+      </div>
+
+      <!-- Voice 2 -->
+      <div class="reveal reveal-d1 bg-white p-10" style="border-top:2px solid var(--rose-light);">
+        <div class="flex items-center gap-1 mb-6">
+          <span style="color:var(--gold);">&#9733;</span>
+          <span style="color:var(--gold);">&#9733;</span>
+          <span style="color:var(--gold);">&#9733;</span>
+          <span style="color:var(--gold);">&#9733;</span>
+          <span style="color:var(--gold);">&#9733;</span>
+        </div>
+        <p class="font-light text-sm mb-8" style="line-height:2.6; color:var(--ink-mid);">
+          不器用な私でも丁寧に教えてもらえて、可愛いピアスが完成！友達にも「どこで買ったの？」と褒められました。
+        </p>
+        <div>
+          <p class="text-xs font-medium" style="color:var(--ink-dark);">A.K さん</p>
+          <p class="text-[10px]" style="color:var(--ink-light);">20代・学生</p>
+        </div>
+      </div>
+
+      <!-- Voice 3 -->
+      <div class="reveal reveal-d2 bg-white p-10" style="border-top:2px solid var(--rose-light);">
+        <div class="flex items-center gap-1 mb-6">
+          <span style="color:var(--gold);">&#9733;</span>
+          <span style="color:var(--gold);">&#9733;</span>
+          <span style="color:var(--gold);">&#9733;</span>
+          <span style="color:var(--gold);">&#9733;</span>
+          <span style="color:var(--gold);">&#9733;</span>
+        </div>
+        <p class="font-light text-sm mb-8" style="line-height:2.6; color:var(--ink-mid);">
+          診断で似合う色を知れたおかげで、服やメイク選びにも自信が持てるようになりました。参加して本当によかったです。
+        </p>
+        <div>
+          <p class="text-xs font-medium" style="color:var(--ink-dark);">Y.T さん</p>
+          <p class="text-[10px]" style="color:var(--ink-light);">40代・主婦</p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     6. INSTRUCTOR
+═══════════════════════════════════════════════ -->
+<section class="bg-white px-6 sec-pad">
+  <div class="max-w-4xl mx-auto">
+    <div class="reveal overflow-hidden">
+      <img src="images/instructor.jpg" alt="講師紹介 - color studio bell / petit fleur" style="width:100%; height:auto;">
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     7. SPECIAL GIFT
+═══════════════════════════════════════════════ -->
+<section class="px-6 sec-pad" style="background:var(--cream);">
+  <div class="max-w-3xl mx-auto">
+
+    <div class="text-center mb-20">
+      <p class="reveal font-display uppercase tracking-[.38em] text-[10px] mb-5" style="color:var(--rose);">Special Gift</p>
+      <h2 class="reveal reveal-d1 font-serif font-light" style="font-size:clamp(22px,4vw,36px); line-height:1.9;">
+        スペシャル特典
+      </h2>
+      <div class="reveal reveal-d2 hr-rose w-20 mx-auto mt-7"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="reveal bg-white p-12" style="border-top:1px solid var(--rose-light);">
+        <p class="font-display italic font-light leading-none mb-6" style="font-size:56px; color:var(--rose-blush);">01</p>
+        <h3 class="font-serif font-light text-xl mb-4">プチ診断シート</h3>
+        <p class="font-light text-sm" style="color:var(--ink-mid); line-height:2.6;">
+          後からも振り返れる、あなた専用の診断結果シートをプレゼント。
+        </p>
+      </div>
+      <div class="reveal reveal-d1 bg-white p-12" style="border-top:1px solid var(--rose-light);">
+        <p class="font-display italic font-light leading-none mb-6" style="font-size:56px; color:var(--rose-blush);">02</p>
+        <h3 class="font-serif font-light text-xl mb-4">復習できる動画レッスン</h3>
+        <p class="font-light text-sm" style="color:var(--ink-mid); line-height:2.6;">
+          アクセサリーを再び作りたくなったとき、動画で復習できます。
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     8. PRICE
+═══════════════════════════════════════════════ -->
+<section class="px-6 ph-dark sec-pad">
+  <div class="max-w-3xl mx-auto">
+
+    <div class="text-center mb-20">
+      <p class="reveal font-display uppercase tracking-[.38em] text-[10px] mb-5" style="color:var(--rose-light);">Workshop Price</p>
+      <h2 class="reveal reveal-d1 font-serif font-light" style="font-size:clamp(22px,4vw,36px); color:#fdf8f4; line-height:1.9;">
+        ワークショップ特別価格
+      </h2>
+      <div class="reveal reveal-d2 hr-rose w-20 mx-auto mt-7"></div>
+    </div>
+
+    <!-- Price -->
+    <div class="reveal text-center mb-16">
+      <p class="font-display italic font-light leading-none" style="font-size:clamp(72px,14vw,130px); color:var(--gold-light);">&#165;6,600</p>
+      <p class="font-display text-xs tracking-[.3em] mt-3 uppercase" style="color:rgba(255,255,255,.35);">税込み</p>
+    </div>
+
+    <!-- Includes -->
+    <div class="reveal grid grid-cols-1 md:grid-cols-2 gap-0 mb-16">
+      <div class="py-6 flex items-center gap-5" style="border-bottom:1px solid rgba(255,255,255,.08);">
+        <span class="font-display text-xs" style="color:var(--gold);">&#10022;</span>
+        <p class="font-light text-sm tracking-wide" style="color:rgba(255,255,255,.7);">簡易パーソナルカラー診断</p>
+      </div>
+      <div class="py-6 flex items-center gap-5 md:pl-10" style="border-bottom:1px solid rgba(255,255,255,.08);">
+        <span class="font-display text-xs" style="color:var(--gold);">&#10022;</span>
+        <p class="font-light text-sm tracking-wide" style="color:rgba(255,255,255,.7);">顔パーツ診断</p>
+      </div>
+      <div class="py-6 flex items-center gap-5" style="border-bottom:1px solid rgba(255,255,255,.08);">
+        <span class="font-display text-xs" style="color:var(--gold);">&#10022;</span>
+        <p class="font-light text-sm tracking-wide" style="color:rgba(255,255,255,.7);">ビジューピアス or イヤリング製作</p>
+      </div>
+      <div class="py-6 flex items-center gap-5 md:pl-10" style="border-bottom:1px solid rgba(255,255,255,.08);">
+        <span class="font-display text-xs" style="color:var(--gold);">&#10022;</span>
+        <p class="font-light text-sm tracking-wide" style="color:rgba(255,255,255,.7);">材料費・レッスン代 すべて込み</p>
+      </div>
+      <div class="py-6 flex items-center gap-5 md:col-span-2">
+        <span class="font-display text-xs" style="color:var(--gold);">&#10022;</span>
+        <p class="font-light text-sm tracking-wide" style="color:rgba(255,255,255,.7);">スペシャル特典 2点つき</p>
+      </div>
+    </div>
+
+    <!-- Payment -->
+    <div class="reveal text-center" style="border-top:1px solid rgba(255,255,255,.1); padding-top:40px;">
+      <p class="font-display uppercase tracking-[.32em] text-[10px] mb-6" style="color:var(--rose-light);">お支払い方法（当日現地払い）</p>
+      <div class="flex items-center justify-center gap-5">
+        <span class="font-display text-xs px-7 py-2.5 tracking-widest" style="border:1px solid rgba(255,255,255,.2); color:rgba(255,255,255,.55);">現金</span>
+        <span class="font-display text-xs px-7 py-2.5 tracking-widest" style="border:1px solid rgba(255,255,255,.2); color:rgba(255,255,255,.55);">PayPay</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     EVENT INFO
+═══════════════════════════════════════════════ -->
+<section class="bg-white px-6 sec-pad">
+  <div class="max-w-4xl mx-auto">
+
+    <div class="text-center mb-20">
+      <p class="reveal font-display uppercase tracking-[.38em] text-[10px] mb-5" style="color:var(--rose);">Event</p>
+      <h2 class="reveal reveal-d1 font-serif font-light" style="font-size:clamp(22px,4vw,36px); line-height:1.9;">
+        イベント情報
+      </h2>
+      <div class="reveal reveal-d2 hr-rose w-20 mx-auto mt-7"></div>
+    </div>
+
+    <div class="reveal max-w-lg mx-auto">
+      <a href="https://www.b-fes.com/" target="_blank" rel="noopener">
+        <img src="images/bifes-event.jpg" alt="美フェスKANSAI 2026 - 5.3 SUN 10:30-16:00 大阪市中央公会堂3F 入場無料" style="width:100%; height:auto;">
+      </a>
+    </div>
+
+    <div class="reveal text-center mt-12 space-y-4">
+      <h3 class="font-serif font-light text-xl" style="color:var(--ink-dark);">美フェス KANSAI 2026</h3>
+      <p class="font-light text-sm" style="color:var(--ink-mid); line-height:2.4;">
+        2026年5月3日（日） 10:30〜16:00<br>
+        大阪市中央公会堂 3F ｜ 入場無料
+      </p>
+      <div class="pt-4">
+        <a href="https://www.b-fes.com/" target="_blank" rel="noopener" class="font-display text-xs tracking-[.2em]" style="color:var(--rose-deep); border-bottom:1px solid var(--rose-light); padding-bottom:2px;">
+          美フェス公式サイトはこちら &rarr;
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     9. SCHEDULE
+═══════════════════════════════════════════════ -->
+<section class="px-6 sec-pad" style="background:var(--cream);">
+  <div class="max-w-3xl mx-auto">
+
+    <div class="text-center mb-20">
+      <p class="reveal font-display uppercase tracking-[.38em] text-[10px] mb-5" style="color:var(--rose);">Date &amp; Time</p>
+      <h2 class="reveal reveal-d1 font-serif font-light" style="font-size:clamp(22px,4vw,36px); line-height:1.9;">
+        開催日時・場所
+      </h2>
+      <div class="reveal reveal-d2 hr-rose w-20 mx-auto mt-7"></div>
+    </div>
+
+    <!-- Date + Location -->
+    <div class="reveal text-center mb-16">
+      <p class="font-display italic font-light tracking-[.15em]" style="font-size:clamp(26px,5vw,44px); color:var(--rose-deep);">2026 . 5 . 3 &nbsp; Sun</p>
+      <div class="mt-4 flex items-center justify-center gap-3">
+        <span class="block w-4 h-px" style="background:var(--rose-light);"></span>
+        <p class="font-display text-sm tracking-[.25em]" style="color:var(--ink-mid);">中之島公会堂</p>
+        <span class="block w-4 h-px" style="background:var(--rose-light);"></span>
+      </div>
+    </div>
+
+    <!-- Time slots -->
+    <div class="reveal max-w-md mx-auto space-y-0">
+      <div class="flex items-center gap-6 py-7" style="border-bottom:1px solid #f0e8e8;">
+        <p class="font-display italic font-light w-6 text-center" style="font-size:20px; color:var(--rose-light);">&#9312;</p>
+        <p class="font-display font-light tracking-widest" style="font-size:20px;">10:45 &ndash; 11:45</p>
+        <p class="ml-auto font-display text-xs tracking-widest uppercase" style="color:var(--ink-light);">約60分</p>
+      </div>
+      <div class="flex items-center gap-6 py-7" style="border-bottom:1px solid #f0e8e8;">
+        <p class="font-display italic font-light w-6 text-center" style="font-size:20px; color:var(--rose-light);">&#9313;</p>
+        <p class="font-display font-light tracking-widest" style="font-size:20px;">11:45 &ndash; 12:45</p>
+        <p class="ml-auto font-display text-xs tracking-widest uppercase" style="color:var(--ink-light);">約60分</p>
+      </div>
+      <div class="flex items-center gap-6 py-7" style="border-bottom:1px solid #f0e8e8;">
+        <p class="font-display italic font-light w-6 text-center" style="font-size:20px; color:var(--rose-light);">&#9314;</p>
+        <p class="font-display font-light tracking-widest" style="font-size:20px;">12:45 &ndash; 13:45</p>
+        <p class="ml-auto font-display text-xs tracking-widest uppercase" style="color:var(--ink-light);">約60分</p>
+      </div>
+      <div class="flex items-center gap-6 py-7" style="border-bottom:1px solid #f0e8e8;">
+        <p class="font-display italic font-light w-6 text-center" style="font-size:20px; color:var(--rose-light);">&#9315;</p>
+        <p class="font-display font-light tracking-widest" style="font-size:20px;">13:45 &ndash; 14:45</p>
+        <p class="ml-auto font-display text-xs tracking-widest uppercase" style="color:var(--ink-light);">約60分</p>
+      </div>
+      <div class="flex items-center gap-6 py-7">
+        <p class="font-display italic font-light w-6 text-center" style="font-size:20px; color:var(--rose-light);">&#9316;</p>
+        <p class="font-display font-light tracking-widest" style="font-size:20px;">14:45 &ndash; 15:45</p>
+        <p class="ml-auto font-display text-xs tracking-widest uppercase" style="color:var(--ink-light);">約60分</p>
+      </div>
+    </div>
+
+    <div class="reveal mt-12 text-center">
+      <p class="font-display text-xs tracking-[.28em] uppercase" style="color:var(--rose);">予約優先制</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     10. FAQ
+═══════════════════════════════════════════════ -->
+<section class="bg-white px-6 sec-pad">
+  <div class="max-w-3xl mx-auto">
+
+    <div class="text-center mb-20">
+      <p class="reveal font-display uppercase tracking-[.38em] text-[10px] mb-5" style="color:var(--rose);">FAQ</p>
+      <h2 class="reveal reveal-d1 font-serif font-light" style="font-size:clamp(22px,4vw,36px); line-height:1.9;">
+        よくある質問
+      </h2>
+      <div class="reveal reveal-d2 hr-rose w-20 mx-auto mt-7"></div>
+    </div>
+
+    <div class="reveal space-y-0" id="faq">
+
+      <div class="faq-item" style="border-bottom:1px solid #f0e8e8;">
+        <button class="faq-btn w-full flex items-center justify-between py-7 text-left" onclick="toggleFaq(this)">
+          <p class="font-light text-sm pr-6" style="color:var(--ink-dark);">初めてでも大丈夫ですか？</p>
+          <span class="faq-icon flex-shrink-0 font-display text-lg" style="color:var(--rose-light);">+</span>
+        </button>
+        <div class="faq-answer">
+          <p class="font-light text-sm pb-7 pr-10" style="color:var(--ink-mid); line-height:2.6;">
+            もちろんです！はじめての方がほとんどですので、丁寧にサポートいたします。不器用さんも安心してご参加ください。
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item" style="border-bottom:1px solid #f0e8e8;">
+        <button class="faq-btn w-full flex items-center justify-between py-7 text-left" onclick="toggleFaq(this)">
+          <p class="font-light text-sm pr-6" style="color:var(--ink-dark);">所要時間はどのくらいですか？</p>
+          <span class="faq-icon flex-shrink-0 font-display text-lg" style="color:var(--rose-light);">+</span>
+        </button>
+        <div class="faq-answer">
+          <p class="font-light text-sm pb-7 pr-10" style="color:var(--ink-mid); line-height:2.6;">
+            約60分です。診断からアクセサリー製作まで、ゆったりお楽しみいただけます。
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item" style="border-bottom:1px solid #f0e8e8;">
+        <button class="faq-btn w-full flex items-center justify-between py-7 text-left" onclick="toggleFaq(this)">
+          <p class="font-light text-sm pr-6" style="color:var(--ink-dark);">何を持っていけばいいですか？</p>
+          <span class="faq-icon flex-shrink-0 font-display text-lg" style="color:var(--rose-light);">+</span>
+        </button>
+        <div class="faq-answer">
+          <p class="font-light text-sm pb-7 pr-10" style="color:var(--ink-mid); line-height:2.6;">
+            特にお持ちいただくものはありません。材料・道具はすべてご用意しております。手ぶらでお越しください。
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item" style="border-bottom:1px solid #f0e8e8;">
+        <button class="faq-btn w-full flex items-center justify-between py-7 text-left" onclick="toggleFaq(this)">
+          <p class="font-light text-sm pr-6" style="color:var(--ink-dark);">金属アレルギーが心配です…</p>
+          <span class="faq-icon flex-shrink-0 font-display text-lg" style="color:var(--rose-light);">+</span>
+        </button>
+        <div class="faq-answer">
+          <p class="font-light text-sm pb-7 pr-10" style="color:var(--ink-mid); line-height:2.6;">
+            サージカルステンレス（金属アレルギー対応素材）を使用しています。ただし、すべての方に反応が出ないわけではありませんので、ご心配な方は事前にご相談ください。
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item" style="border-bottom:1px solid #f0e8e8;">
+        <button class="faq-btn w-full flex items-center justify-between py-7 text-left" onclick="toggleFaq(this)">
+          <p class="font-light text-sm pr-6" style="color:var(--ink-dark);">当日参加はできますか？</p>
+          <span class="faq-icon flex-shrink-0 font-display text-lg" style="color:var(--rose-light);">+</span>
+        </button>
+        <div class="faq-answer">
+          <p class="font-light text-sm pb-7 pr-10" style="color:var(--ink-mid); line-height:2.6;">
+            予約優先制ですが、空きがあれば当日参加も可能です。確実にご参加いただくには事前予約がおすすめです。
+          </p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn w-full flex items-center justify-between py-7 text-left" onclick="toggleFaq(this)">
+          <p class="font-light text-sm pr-6" style="color:var(--ink-dark);">キャンセルはできますか？</p>
+          <span class="faq-icon flex-shrink-0 font-display text-lg" style="color:var(--rose-light);">+</span>
+        </button>
+        <div class="faq-answer">
+          <p class="font-light text-sm pb-7 pr-10" style="color:var(--ink-mid); line-height:2.6;">
+            キャンセルの場合は、お早めにInstagram DMよりご連絡ください。
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     11. NOTES
+═══════════════════════════════════════════════ -->
+<section class="px-6" style="background:var(--cream); padding-top:100px; padding-bottom:100px;">
+  <div class="max-w-3xl mx-auto">
+
+    <div class="text-center mb-16">
+      <p class="reveal font-display uppercase tracking-[.38em] text-[10px] mb-5" style="color:var(--ink-mid);">Notice</p>
+      <h2 class="reveal reveal-d1 font-serif font-light text-xl" style="line-height:1.9;">
+        ご参加前にご確認ください
+      </h2>
+      <div class="reveal reveal-d2 hr-rose w-16 mx-auto mt-6"></div>
+    </div>
+
+    <div class="space-y-0">
+      <div class="reveal py-8" style="border-bottom:1px solid #f0e8e4;">
+        <p class="font-display uppercase tracking-[.25em] text-[10px] mb-3" style="color:var(--gold);">診断について</p>
+        <p class="font-light text-sm" style="color:var(--ink-mid); line-height:2.8;">
+          通常のコラボレッスンと違い、診断は写真計測を行わない簡易版です。デザイン分類も8種類ではなく3種類となります。顔タイプのフル診断をご希望の方はコラボレッスンがおすすめです。
+        </p>
+      </div>
+      <div class="reveal py-8" style="border-bottom:1px solid #f0e8e4;">
+        <p class="font-display uppercase tracking-[.25em] text-[10px] mb-3" style="color:var(--gold);">金属アレルギーについて</p>
+        <p class="font-light text-sm" style="color:var(--ink-mid); line-height:2.8;">
+          サージカルステンレス（金属アレルギー対応素材）を使用していますが、すべての方に反応が出ないわけではありません。
+        </p>
+      </div>
+      <div class="reveal py-8">
+        <p class="font-display uppercase tracking-[.25em] text-[10px] mb-3" style="color:var(--gold);">レジン素材について</p>
+        <p class="font-light text-sm" style="color:var(--ink-mid); line-height:2.8;">
+          レジンを使用します。レジンアレルギーのある方はご参加をご遠慮ください。
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     ACCESS
+═══════════════════════════════════════════════ -->
+<section class="bg-white px-6 sec-pad">
+  <div class="max-w-4xl mx-auto">
+
+    <div class="text-center mb-20">
+      <p class="reveal font-display uppercase tracking-[.38em] text-[10px] mb-5" style="color:var(--rose);">Access</p>
+      <h2 class="reveal reveal-d1 font-serif font-light" style="font-size:clamp(22px,4vw,36px); line-height:1.9;">
+        アクセス
+      </h2>
+      <div class="reveal reveal-d2 hr-rose w-20 mx-auto mt-7"></div>
+    </div>
+
+    <div class="reveal space-y-8">
+      <!-- Venue info -->
+      <div class="text-center space-y-4">
+        <h3 class="font-serif font-light text-xl" style="color:var(--ink-dark);">大阪市中央公会堂（中之島公会堂）</h3>
+        <p class="font-light text-sm" style="color:var(--ink-mid); line-height:2.4;">
+          〒530-0005 大阪府大阪市北区中之島1丁目1-27
+        </p>
+      </div>
+
+      <!-- Google Map -->
+      <div class="overflow-hidden" style="border:1px solid var(--ink-pale);">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3280.2537!2d135.5032!3d34.6932!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e6953da2c2b1%3A0xab6b8bba1d3e1863!2z5aSn6Ziq5biC5Lit5aSu5YWs5Lya5aCC!5e0!3m2!1sja!2sjp!4v1700000000000!5m2!1sja!2sjp"
+          width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+
+      <!-- Access details -->
+      <div class="text-center space-y-3">
+        <p class="font-light text-sm" style="color:var(--ink-mid); line-height:2.4;">
+          京阪中之島線「なにわ橋駅」1番出口より徒歩約1分<br>
+          地下鉄御堂筋線「淀屋橋駅」1番出口より徒歩約5分<br>
+          京阪本線「北浜駅」26番出口より徒歩約3分
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     12. CTA
+═══════════════════════════════════════════════ -->
+<section class="px-6 ph-hero text-center relative overflow-hidden" style="padding-top:140px; padding-bottom:160px;">
+
+  <div class="absolute inset-0 pointer-events-none overflow-hidden">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full" style="background:radial-gradient(circle, rgba(196,131,142,.1) 0%, transparent 65%);"></div>
+  </div>
+
+  <p class="reveal font-display uppercase tracking-[.38em] text-[10px] mb-10 z-10 relative" style="color:var(--rose);">Reservation</p>
+
+  <h2 class="reveal reveal-d1 font-serif font-light z-10 relative" style="font-size:clamp(22px,5vw,40px); line-height:1.9;">
+    あなただけの特別な体験を<br>この日に。
+  </h2>
+
+  <div class="reveal reveal-d2 hr-rose w-24 mx-auto my-12 z-10 relative"></div>
+
+  <p class="reveal reveal-d2 font-light text-sm mb-4 z-10 relative" style="color:var(--ink-mid); line-height:2.8;">
+    限られた枠のため、お早めにご予約ください。
+  </p>
+  <p class="reveal reveal-d3 font-display text-xs tracking-[.25em] mb-14 z-10 relative" style="color:var(--ink-light);">
+    予約優先制 &nbsp;|&nbsp; 当日参加も受付中
+  </p>
+
+  <div class="reveal reveal-d3 z-10 relative">
+    <a href="https://script.google.com/macros/s/AKfycbyQ1e6FtrwM0ZS1dxd1hDOCBP51tYbMStXhwQ3p6JY7Ffr3PKlLyrutUy8WdWC9a7Wefg/exec?page=user" class="btn-cta" target="_blank" rel="noopener">ご予約はこちら</a>
+  </div>
+
+  <a href="https://lin.ee/7XAm50hl" target="_blank" rel="noopener" class="reveal reveal-d4 mt-8 inline-flex items-center gap-2 font-display text-xs tracking-widest z-10 relative" style="color:var(--ink-light); text-decoration:none;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.349 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.281.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/></svg>
+    お問い合わせは公式LINEから
+  </a>
+
+</section>
+
+
+<!-- ═══════════════════════════════════════════════
+     13. FOOTER
+═══════════════════════════════════════════════ -->
+<footer class="px-6 py-16 text-center ph-dark">
+  <p class="font-display italic font-light tracking-[.2em] mb-3" style="font-size:26px; color:var(--rose-light);">Colore</p>
+  <div class="hr-rose w-14 mx-auto mb-5"></div>
+  <p class="font-display text-[10px] tracking-widest uppercase" style="color:rgba(255,255,255,.2);">&copy; 2026 Colore Workshop. All rights reserved.</p>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════
+     SCRIPTS
+═══════════════════════════════════════════════ -->
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // FAQ accordion
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    item.classList.toggle('open');
+  }
+</script>
+
+</body>
+</html>
